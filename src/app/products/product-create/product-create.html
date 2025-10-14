@@ -1,0 +1,100 @@
+<div class="create-product-container">
+  <div class="form-header">
+    <h2>Create New Product</h2>
+    <button class="btn btn-secondary" (click)="onCancel()">
+      Back to List
+    </button>
+  </div>
+
+  <div class="form-card">
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      
+      <!-- Name Field -->
+      <div class="form-group">
+        <label for="name">Product Name <span class="required">*</span></label>
+        <input 
+          type="text" 
+          id="name"
+          class="form-control"
+          formControlName="name"
+          placeholder="Enter product name"
+          [class.is-invalid]="productForm.get('name')?.invalid && productForm.get('name')?.touched">
+        <div class="error-message" *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched">
+          <small *ngIf="productForm.get('name')?.errors?.['required']">Name is required</small>
+          <small *ngIf="productForm.get('name')?.errors?.['minlength']">Name must be at least 2 characters</small>
+        </div>
+      </div>
+
+      <!-- Description Field -->
+      <div class="form-group">
+        <label for="description">Description <span class="required">*</span></label>
+        <textarea 
+          id="description"
+          class="form-control"
+          formControlName="description"
+          placeholder="Enter product description"
+          rows="4"
+          [class.is-invalid]="productForm.get('description')?.invalid && productForm.get('description')?.touched"></textarea>
+        <div class="error-message" *ngIf="productForm.get('description')?.invalid && productForm.get('description')?.touched">
+          <small *ngIf="productForm.get('description')?.errors?.['required']">Description is required</small>
+          <small *ngIf="productForm.get('description')?.errors?.['maxlength']">Description cannot exceed 200 characters</small>
+        </div>
+      </div>
+
+      <!-- Price and Stock Row -->
+      <div class="form-row">
+        <!-- Price Field -->
+        <div class="form-group">
+          <label for="price">Price <span class="required">*</span></label>
+          <input 
+            type="number" 
+            id="price"
+            class="form-control"
+            formControlName="price"
+            placeholder="0.00"
+            step="0.01"
+            min="0"
+            [class.is-invalid]="productForm.get('price')?.invalid && productForm.get('price')?.touched">
+          <div class="error-message" *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched">
+            <small *ngIf="productForm.get('price')?.errors?.['required']">Price is required</small>
+            <small *ngIf="productForm.get('price')?.errors?.['min']">Price must be greater than 0</small>
+          </div>
+        </div>
+
+        <!-- Stock Field -->
+        <div class="form-group">
+          <label for="stock">Stock <span class="required">*</span></label>
+          <input 
+            type="number" 
+            id="stock"
+            class="form-control"
+            formControlName="stock"
+            placeholder="0"
+            min="0"
+            [class.is-invalid]="productForm.get('stock')?.invalid && productForm.get('stock')?.touched">
+          <div class="error-message" *ngIf="productForm.get('stock')?.invalid && productForm.get('stock')?.touched">
+            <small *ngIf="productForm.get('stock')?.errors?.['required']">Stock is required</small>
+            <small *ngIf="productForm.get('stock')?.errors?.['min']">Stock cannot be negative</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <button 
+          type="button" 
+          class="btn btn-secondary" 
+          (click)="onCancel()">
+          Cancel
+        </button>
+        <button 
+          type="submit" 
+          class="btn btn-primary"
+          [disabled]="productForm.invalid">
+          Create Product
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

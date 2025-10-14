@@ -1,0 +1,67 @@
+<div class="product-list-container">
+  <div class="header">
+    <h2>Products List</h2>
+    <button class="btn btn-primary" [routerLink]="['/products/create']">
+      Add New Product
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    Loading products...
+  </div>
+
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error" class="table-container">
+    <table class="products-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Created At</th>
+          <th>Updated At</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td>{{ product.id }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.description }}</td>
+          <td>{{ product.price | currency }}</td>
+          <td>{{ product.stock }}</td>
+          <td>{{ product.createdAt | date:'short' }}</td>
+          <td>{{ product.updatedAt ? (product.updatedAt | date:'short') : 'N/A' }}</td>
+          <td class="actions">
+            <button 
+              class="btn btn-info" 
+              [routerLink]="['/products', product.id]"
+              title="View Details">
+              View
+            </button>
+            <button 
+              class="btn btn-warning" 
+              [routerLink]="['/products/update', product.id]"
+              title="Edit Product">
+              Edit
+            </button>
+            <button 
+              class="btn btn-danger" 
+              (click)="deleteProduct(product.id!)"
+              title="Delete Product">
+              Delete
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="products.length === 0">
+          <td colspan="8" class="no-data">No products found</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
