@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface Product {
   id?: number;
@@ -16,7 +17,7 @@ export interface Product {
   providedIn: 'root'
 })
 export class ProductService {
-  private baseURL = 'https://localhost:7443';
+  private baseURL = environment.apiBaseUrl;
   constructor(private http: HttpClient) { }
 
   getAllProducts(): Observable<Product[]> {
