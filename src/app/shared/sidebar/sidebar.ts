@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-sidebar',
   imports: [CommonModule, RouterModule],
   templateUrl: './sidebar.html',
-  styleUrl: './sidebar.css'
+  styleUrls: ['./sidebar.css']
 })
 export class Sidebar {
   isCollapsed = false;

@@ -1,67 +1,159 @@
 <div class="product-list-container">
-  <div class="header">
-    <h2>Products List</h2>
-    <button class="btn btn-primary" [routerLink]="['/products/create']">
-      Add New Product
-    </button>
-  </div>
+  <!-- Header with Title and Add Button -->
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="header">
+        <h2>Products List</h2>
+        <p-button 
+          label="Add New Product" 
+          icon="pi pi-plus" 
+          [routerLink]="['/products/create']"
+          severity="success">
+        </p-button>
+      </div>
+    </ng-template>
 
-  <div *ngIf="loading" class="loading">
-    Loading products...
-  </div>
+    <!-- Loading Spinner -->
+    <div *ngIf="loading" class="spinner-container">
+      <p-progressSpinner 
+        styleClass="w-4rem h-4rem" 
+        strokeWidth="4" 
+        animationDuration="1s">
+      </p-progressSpinner>
+    </div>
 
-  <div *ngIf="error" class="error">
-    {{ error }}
-  </div>
+    <!-- Error Message -->
+    <p-message 
+      *ngIf="error" 
+      severity="error" 
+      [text]="error">
+    </p-message>
 
-  <div *ngIf="!loading && !error" class="table-container">
-    <table class="products-table">
-      <thead>
+    <!-- Products Table -->
+    <p-table 
+      #dt
+      *ngIf="!loading && !error"
+      [value]="products" 
+      [paginator]="true" 
+      [rows]="10"
+      [rowsPerPageOptions]="[5, 10, 20]"
+      [tableStyle]="{ 'min-width': '60rem' }"
+      [globalFilterFields]="['name', 'description', 'price', 'stock']"
+      styleClass="p-datatable-striped">
+      
+      <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+          <span class="p-input-icon-left w-full">
+            <i class="pi pi-search" style="margin-right: 1rem;"></i>
+            <input 
+              pInputText 
+              type="text" 
+              placeholder="Search products..." 
+              class="w-full"
+              #searchInput
+              (input)="dt.filterGlobal(searchInput.value, 'contains')" />
+          </span>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
         <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Price</th>
-          <th>Stock</th>
-          <th>Created At</th>
-          <th>Updated At</th>
+          <th pSortableColumn="id">
+            ID <p-sortIcon field="id"></p-sortIcon>
+          </th>
+          <th pSortableColumn="name">
+            Name <p-sortIcon field="name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="description">
+            Description
+          </th>
+          <th pSortableColumn="price">
+            Price <p-sortIcon field="price"></p-sortIcon>
+          </th>
+          <th pSortableColumn="stock">
+            Stock <p-sortIcon field="stock"></p-sortIcon>
+          </th>
+          <th pSortableColumn="createdAt">
+            Created At <p-sortIcon field="createdAt"></p-sortIcon>
+          </th>
           <th>Actions</th>
         </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let product of products">
+      </ng-template>
+
+      <ng-template pTemplate="body" let-product>
+        <tr>
           <td>{{ product.id }}</td>
-          <td>{{ product.name }}</td>
-          <td>{{ product.description }}</td>
-          <td>{{ product.price | currency }}</td>
-          <td>{{ product.stock }}</td>
+          <td>
+            <strong>{{ product.name }}</strong>
+          </td>
+          <td>
+            <span pTooltip="{{ product.description }}" tooltipPosition="top">
+              {{ product.description?.substring(0, 50) }}{{ product.description?.length > 50 ? '...' : '' }}
+            </span>
+          </td>
+          <td>
+            <p-tag 
+              [value]="(product.price | currency) || ''" 
+              severity="success">
+            </p-tag>
+          </td>
+          <td>
+            <p-tag 
+              [value]="product.stock?.toString() || '0'" 
+              [severity]="product.stock > 10 ? 'success' : product.stock > 0 ? 'warn' : 'danger'">
+            </p-tag>
+          </td>
           <td>{{ product.createdAt | date:'short' }}</td>
-          <td>{{ product.updatedAt ? (product.updatedAt | date:'short') : 'N/A' }}</td>
-          <td class="actions">
-            <button 
-              class="btn btn-info" 
-              [routerLink]="['/products', product.id]"
-              title="View Details">
-              View
-            </button>
-            <button 
-              class="btn btn-warning" 
-              [routerLink]="['/products/update', product.id]"
-              title="Edit Product">
-              Edit
-            </button>
-            <button 
-              class="btn btn-danger" 
-              (click)="deleteProduct(product.id!)"
-              title="Delete Product">
-              Delete
-            </button>
+          <td>
+            <div class="action-buttons">
+              <p-button 
+                icon="pi pi-eye" 
+                [routerLink]="['/products', product.id]"
+                severity="info"
+                [rounded]="true"
+                [text]="true"
+                pTooltip="View Details"
+                tooltipPosition="top">
+              </p-button>
+              <p-button 
+                icon="pi pi-pencil" 
+                [routerLink]="['/products/update', product.id]"
+                severity="warn"
+                [rounded]="true"
+                [text]="true"
+                pTooltip="Edit Product"
+                tooltipPosition="top">
+              </p-button>
+              <p-button 
+                icon="pi pi-trash" 
+                (click)="confirmDelete(product)"
+                severity="danger"
+                [rounded]="true"
+                [text]="true"
+                pTooltip="Delete Product"
+                tooltipPosition="top">
+              </p-button>
+            </div>
           </td>
         </tr>
-        <tr *ngIf="products.length === 0">
-          <td colspan="8" class="no-data">No products found</td>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7" class="text-center">
+            <div class="empty-message">
+              <i class="pi pi-inbox" style="font-size: 3rem; color: #ccc;"></i>
+              <p>No products found</p>
+            </div>
+          </td>
         </tr>
-      </tbody>
-    </table>
-  </div>
+      </ng-template>
+    </p-table>
+  </p-card>
+
+  <!-- Confirmation Dialog -->
+  <p-confirmDialog></p-confirmDialog>
+  
+  <!-- Toast Messages -->
+  <p-toast></p-toast>
 </div>
