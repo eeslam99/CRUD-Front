@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { ProductService, Product } from '../services/product';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ProductService } from '../services/product.service';
+import { Product } from '../Models/Product';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-product-update',
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  standalone: false,
   templateUrl: './product-update.html',
-  styleUrl: './product-update.css'
+  styleUrls: ['./product-update.css']
 })
 export class ProductUpdate implements OnInit {
   productForm: FormGroup;

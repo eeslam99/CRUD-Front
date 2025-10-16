@@ -1,21 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { ProductService, Product } from '../services/product';
-import Swal from 'sweetalert2';
+import { ProductService } from '../services/product.service';
+import { Product } from '../Models/Product';
+
+// PrimeNG Services
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-product-list',
-  imports: [CommonModule, RouterModule],
+  standalone: false,
   templateUrl: './product-list.html',
-  styleUrl: './product-list.css'
+  styleUrls: ['./product-list.css']
 })
 export class ProductList implements OnInit {
   products: Product[] = [];
   loading: boolean = false;
   error: string = '';
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
     this.loadProducts();
@@ -43,40 +48,50 @@ export class ProductList implements OnInit {
       }
     });
   }
+
+  confirmDelete(product: Product): void {
+    this.confirmationService.confirm({
+      message: `Are you sure you want to delete "${product.name}"?`,
+      header: 'Delete Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      acceptButtonStyleClass: 'p-button-danger p-button-text',
+      rejectButtonStyleClass: 'p-button-text p-button-text',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      accept: () => {
+        this.deleteProduct(product.id!);
+      },
+      reject: () => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Cancelled',
+          detail: 'Delete operation cancelled',
+          life: 3000
+        });
+      }
+    });
+  }
+
   deleteProduct(id: number): void {
-  Swal.fire({
-    title: 'Are you sure?',
-    text: 'This will delete the product permanently!',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#d33',
-    cancelButtonColor: '#3085d6',
-    confirmButtonText: 'Yes, delete it!',
-    cancelButtonText: 'Cancel'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      this.productService.deleteProduct(id).subscribe({
-        next: () => {
-          this.loadProducts(); 
-          Swal.fire({
-            icon: 'success',
-            title: 'Deleted!',
-            text: 'The product has been deleted successfully.',
-            confirmButtonText: 'OK'
-          });
-        },
-        error: (err) => {
-          console.error('Error deleting product:', err);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Failed to delete the product.',
-            confirmButtonText: 'OK'
-          });
-        }
-      });
-    }
-  });
-}
-  
+    this.productService.deleteProduct(id).subscribe({
+      next: () => {
+        this.loadProducts();
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Product deleted successfully',
+          life: 3000
+        });
+      },
+      error: (err) => {
+        console.error('Error deleting product:', err);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Failed to delete the product',
+          life: 3000
+        });
+      }
+    });
+  }
 }

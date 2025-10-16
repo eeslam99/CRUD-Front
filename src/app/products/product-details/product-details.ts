@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { ProductService, Product } from '../services/product';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ProductService } from '../services/product.service';
+import { Product } from '../Models/Product';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-product-details',
-  imports: [CommonModule, RouterModule],
+  standalone: false,
   templateUrl: './product-details.html',
-  styleUrl: './product-details.css'
+  styleUrls: ['./product-details.css']
 })
 export class ProductDetails implements OnInit {
   product: Product | null = null;

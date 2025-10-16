@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { ProductService, Product } from '../services/product';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ProductService } from '../services/product.service';
+import { Product } from '../Models/Product';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-product-create',
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  standalone: false,
   templateUrl: './product-create.html',
-  styleUrl: './product-create.css'
+  styleUrls: ['./product-create.css']
 })
 
 export class ProductCreate implements OnInit {

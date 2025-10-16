@@ -1,6 +1,6 @@
 .product-list-container {
   padding: 20px;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -8,118 +8,99 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  padding: 1rem;
 }
 
 .header h2 {
   margin: 0;
   color: #333;
-}
-
-.loading, .error {
-  text-align: center;
-  padding: 20px;
-  font-size: 16px;
-}
-
-.loading {
-  color: #007bff;
-}
-
-.error {
-  color: #dc3545;
-  background-color: #f8d7da;
-  border: 1px solid #f5c6cb;
-  border-radius: 4px;
-}
-
-.table-container {
-  overflow-x: auto;
-}
-
-.products-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.products-table thead {
-  background-color: #f8f9fa;
-}
-
-.products-table th,
-.products-table td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #dee2e6;
-}
-
-.products-table th {
+  font-size: 1.75rem;
   font-weight: 600;
-  color: #495057;
-  text-transform: uppercase;
-  font-size: 14px;
 }
 
-.products-table tbody tr:hover {
-  background-color: #f8f9fa;
-}
-
-.actions {
+.spinner-container {
   display: flex;
-  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  padding: 2rem;
 }
 
-.btn {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-block;
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
 }
 
-.btn-primary {
-  background-color: #007bff;
-  color: white;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
-}
-
-.btn-info {
-  background-color: #17a2b8;
-  color: white;
-}
-
-.btn-info:hover {
-  background-color: #138496;
-}
-
-.btn-warning {
-  background-color: #ffc107;
-  color: #212529;
-}
-
-.btn-warning:hover {
-  background-color: #e0a800;
-}
-
-.btn-danger {
-  background-color: #dc3545;
-  color: white;
-}
-
-.btn-danger:hover {
-  background-color: #c82333;
-}
-
-.no-data {
+.empty-message {
+  padding: 3rem;
   text-align: center;
+}
+
+.empty-message p {
+  margin-top: 1rem;
   color: #6c757d;
-  font-style: italic;
+  font-size: 1.1rem;
+}
+
+/* PrimeNG Table Customization */
+::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  background-color: #f8f9fa;
+  color: #495057;
+  font-weight: 600;
+  padding: 1rem;
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  padding: 0.75rem 1rem;
+}
+
+/* Search Input Styling */
+::ng-deep .p-input-icon-left > input {
+  padding-left: 2.5rem;
+}
+
+::ng-deep .p-input-icon-left > i {
+  left: 0.75rem;
+}
+
+/* Card Styling */
+::ng-deep .p-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+::ng-deep .p-card .p-card-header {
+  padding: 0;
+}
+
+::ng-deep .p-card .p-card-body {
+  padding: 0;
+}
+
+::ng-deep .p-card .p-card-content {
+  padding: 1.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .product-list-container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .header h2 {
+    font-size: 1.5rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
 }
