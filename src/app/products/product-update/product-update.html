@@ -6,9 +6,14 @@
     </button>
   </div>
 
-  <div *ngIf="loading" class="loading">
-    Loading product data...
-  </div>
+  <!-- Loading Spinner -->
+    <div *ngIf="loading" class="spinner-container">
+      <p-progressSpinner 
+        styleClass="w-4rem h-4rem" 
+        strokeWidth="4" 
+        animationDuration="1s">
+      </p-progressSpinner>
+    </div>
 
   <div *ngIf="!loading" class="form-card">
     <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
@@ -26,6 +31,29 @@
         <div class="error-message" *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched">
           <small *ngIf="productForm.get('name')?.errors?.['required']">Name is required</small>
           <small *ngIf="productForm.get('name')?.errors?.['minlength']">Name must be at least 2 characters</small>
+        </div>
+      </div>
+
+      <!-- Country of Origin Field -->
+      <div class="form-group">
+        <label for="countryOfOrigin">Country of Origin <span class="required">*</span></label>
+
+        <p-autoComplete
+          inputId="countryOfOrigin"
+          formControlName="countryOfOrigin"
+          [suggestions]="filteredCountries"
+          (completeMethod)="search($event)"
+          [dropdown]="true"
+          placeholder="Select or type a country"
+        ></p-autoComplete>
+
+        <div class="error-message" *ngIf="productForm.get('countryOfOrigin')?.invalid && productForm.get('countryOfOrigin')?.touched">
+          <small *ngIf="productForm.get('countryOfOrigin')?.errors?.['required']">
+            Country of Origin is required
+          </small>
+          <small *ngIf="productForm.get('countryOfOrigin')?.errors?.['minlength']">
+            Country of Origin must be at least 2 characters
+          </small>
         </div>
       </div>
 

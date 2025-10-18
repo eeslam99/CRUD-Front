@@ -4,6 +4,7 @@ export interface Product {
   price?: number;
   description?: string;
   stock?: number;
+  countryOfOrigin?: string;
   createdAt?: string;
   updatedAt?: string | null;
 }

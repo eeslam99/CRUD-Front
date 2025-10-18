@@ -15,6 +15,8 @@ export class ProductUpdate implements OnInit {
   productForm: FormGroup;
   productId: number = 0;
   loading: boolean = false;
+  countries: string[] = ['Egypt', 'United States', 'Canada', 'Germany', 'France', 'Italy', 'India', 'Japan'];
+  filteredCountries: string[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -26,8 +28,16 @@ export class ProductUpdate implements OnInit {
       name: ['', [Validators.required, Validators.minLength(2)]],
       description: ['', [Validators.required, Validators.maxLength(200)]],
       price: ['', [Validators.required, Validators.min(0.01)]],
-      stock: ['', [Validators.required, Validators.min(0)]]
+      stock: ['', [Validators.required, Validators.min(0)]],
+      countryOfOrigin: ['', [Validators.required, Validators.minLength(2)]]
     });
+  }
+
+  search(event: any) {
+    const query = event.query.toLowerCase();
+    this.filteredCountries = this.countries.filter(c =>
+      c.toLowerCase().includes(query)
+    );
   }
 
   ngOnInit(): void {
@@ -43,7 +53,8 @@ export class ProductUpdate implements OnInit {
           name: product.name,
           description: product.description,
           price: product.price,
-          stock: product.stock
+          stock: product.stock,
+          countryOfOrigin: product.countryOfOrigin
         });
         this.loading = false;
       },
