@@ -24,6 +24,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 // PrimeNG Services
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -52,7 +53,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     ConfirmDialogModule,
     ToastModule,
     IconFieldModule,
-    InputIconModule
+    InputIconModule,
+    AutoCompleteModule
   ],
   providers: [ConfirmationService, MessageService]
 })

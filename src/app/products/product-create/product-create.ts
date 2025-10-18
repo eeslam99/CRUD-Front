@@ -14,6 +14,9 @@ import Swal from 'sweetalert2';
 
 export class ProductCreate implements OnInit {
   productForm: FormGroup;
+  countries: string[] = ['Egypt', 'United States', 'Canada', 'Germany', 'France', 'Italy', 'India', 'Japan'];
+  filteredCountries: string[] = [];
+
   constructor(
     private fb: FormBuilder, 
     private productService: ProductService,
@@ -23,10 +26,23 @@ export class ProductCreate implements OnInit {
       name: ['', [Validators.required, Validators.minLength(2)]],
       description: ['', [Validators.required, Validators.maxLength(200)]],
       price: ['', [Validators.required, Validators.min(0.01)]],
-      stock: ['', [Validators.required, Validators.min(0)]]
+      stock: ['', [Validators.required, Validators.min(0)]],
+      countryOfOrigin: ['', [Validators.required, Validators.minLength(2)]]
     });
   }
-  ngOnInit(): void {}
+  
+  ngOnInit(): void {
+    // this.productForm = this.fb.group({
+    //   countryOfOrigin: ['', [Validators.required, Validators.minLength(2)]]
+    // });
+  }
+
+  search(event: any) {
+    const query = event.query.toLowerCase();
+    this.filteredCountries = this.countries.filter(c =>
+      c.toLowerCase().includes(query)
+    );
+  }
 
   onSubmit(): void {
     if (this.productForm.valid) {

@@ -64,6 +64,9 @@
           <th pSortableColumn="name">
             Name <p-sortIcon field="name"></p-sortIcon>
           </th>
+          <th pSortableColumn="CountryOfOrigin">
+            CountryOfOrigin <p-sortIcon field="CountryOfOrigin"></p-sortIcon>
+          </th>
           <th pSortableColumn="description">
             Description
           </th>
@@ -85,6 +88,9 @@
           <td>{{ product.id }}</td>
           <td>
             <strong>{{ product.name }}</strong>
+          </td>
+          <td>
+            <strong>{{ product.countryOfOrigin }}</strong>
           </td>
           <td>
             <span pTooltip="{{ product.description }}" tooltipPosition="top">
