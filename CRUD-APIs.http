@@ -1,0 +1,443 @@
+@BaseURL = https://localhost:7443
+
+###############################################################################
+# CATEGORIES
+###############################################################################
+
+### Get all categories
+GET {{BaseURL}}/api/categories
+Accept: application/json
+
+###
+
+### Get category by ID
+GET {{BaseURL}}/api/categories/1
+Accept: application/json
+
+###
+
+### Create a new category - Electronics
+POST {{BaseURL}}/api/categories
+Content-Type: application/json
+
+{
+  "name": "Electronics",
+  "description": "Electronic devices and accessories"
+}
+
+###
+
+### Create a new category - Clothing
+POST {{BaseURL}}/api/categories
+Content-Type: application/json
+
+{
+  "name": "Clothing",
+  "description": "Apparel and fashion items"
+}
+
+###
+
+### Create a new category - Furniture
+POST {{BaseURL}}/api/categories
+Content-Type: application/json
+
+{
+  "name": "Furniture",
+  "description": "Home and office furniture"
+}
+
+###
+
+### Update a category
+PUT {{BaseURL}}/api/categories/1
+Content-Type: application/json
+
+{
+  "name": "Electronics & Gadgets",
+  "description": "Electronic devices, gadgets and accessories"
+}
+
+###
+
+### Delete a category
+DELETE {{BaseURL}}/api/categories/1
+
+###
+
+###############################################################################
+# SUBCATEGORIES
+###############################################################################
+
+### Get all subcategories
+GET {{BaseURL}}/api/subcategories
+Accept: application/json
+
+###
+
+### Get subcategory by ID
+GET {{BaseURL}}/api/subcategories/1
+Accept: application/json
+
+###
+
+### Get subcategories by category ID (Single-select cascade)
+GET {{BaseURL}}/api/subcategories/by-category/1
+Accept: application/json
+
+###
+
+### Get subcategories by multiple category IDs (Multi-select cascade - GET)
+GET {{BaseURL}}/api/subcategories/by-categories?categoryIds=1,2,3
+Accept: application/json
+
+###
+
+### Get subcategories by multiple category IDs (Multi-select cascade - POST)
+POST {{BaseURL}}/api/subcategories/by-categories
+Content-Type: application/json
+
+[1, 2, 3]
+
+###
+
+### Create a new subcategory - Laptops
+POST {{BaseURL}}/api/subcategories
+Content-Type: application/json
+
+{
+  "name": "Laptops",
+  "description": "Laptop computers",
+  "categoryId": 1
+}
+
+###
+
+### Create a new subcategory - Phones
+POST {{BaseURL}}/api/subcategories
+Content-Type: application/json
+
+{
+  "name": "Phones",
+  "description": "Mobile phones and smartphones",
+  "categoryId": 1
+}
+
+###
+
+### Create a new subcategory - Headphones
+POST {{BaseURL}}/api/subcategories
+Content-Type: application/json
+
+{
+  "name": "Headphones",
+  "description": "Audio headphones and earbuds",
+  "categoryId": 1
+}
+
+###
+
+### Create a new subcategory - T-Shirts
+POST {{BaseURL}}/api/subcategories
+Content-Type: application/json
+
+{
+  "name": "T-Shirts",
+  "description": "Casual t-shirts",
+  "categoryId": 2
+}
+
+###
+
+### Create a new subcategory - Jeans
+POST {{BaseURL}}/api/subcategories
+Content-Type: application/json
+
+{
+  "name": "Jeans",
+  "description": "Denim jeans",
+  "categoryId": 2
+}
+
+###
+
+### Update a subcategory
+PUT {{BaseURL}}/api/subcategories/1
+Content-Type: application/json
+
+{
+  "name": "Gaming Laptops",
+  "description": "High-performance gaming laptops",
+  "categoryId": 1
+}
+
+###
+
+### Delete a subcategory
+DELETE {{BaseURL}}/api/subcategories/1
+
+###
+
+###############################################################################
+# PRODUCTS
+###############################################################################
+
+### Get all products (includes Category and SubCategory)
+GET {{BaseURL}}/api/products
+Accept: application/json
+
+###
+
+### Get product by ID (includes Category and SubCategory)
+GET {{BaseURL}}/api/products/1
+Accept: application/json
+
+###
+
+### Get products by category ID
+GET {{BaseURL}}/api/products/by-category/1
+Accept: application/json
+
+###
+
+### Get products by subcategory ID
+GET {{BaseURL}}/api/products/by-subcategory/1
+Accept: application/json
+
+###
+
+### Get products by multiple subcategory IDs (GET)
+GET {{BaseURL}}/api/products/by-subcategories?subCategoryIds=1,2,3
+Accept: application/json
+
+###
+
+### Get products by multiple subcategory IDs (POST)
+POST {{BaseURL}}/api/products/by-subcategories
+Content-Type: application/json
+
+[1, 2, 3]
+
+###
+
+### Create a new product - MacBook Pro
+POST {{BaseURL}}/api/products
+Content-Type: application/json
+
+{
+  "name": "MacBook Pro 16\"",
+  "description": "Apple MacBook Pro with M3 chip",
+  "price": 2499.99,
+  "stock": 15,
+  "countryOfOrigin": "USA",
+  "categoryId": 1,
+  "subCategoryId": 1
+}
+
+###
+
+### Create a new product - iPhone 15
+POST {{BaseURL}}/api/products
+Content-Type: application/json
+
+{
+  "name": "iPhone 15 Pro",
+  "description": "Latest Apple smartphone with A17 chip",
+  "price": 999.99,
+  "stock": 50,
+  "countryOfOrigin": "USA",
+  "categoryId": 1,
+  "subCategoryId": 2
+}
+
+###
+
+### Create a new product - Sony Headphones
+POST {{BaseURL}}/api/products
+Content-Type: application/json
+
+{
+  "name": "Sony WH-1000XM5",
+  "description": "Wireless noise-cancelling headphones",
+  "price": 399.99,
+  "stock": 30,
+  "countryOfOrigin": "Japan",
+  "categoryId": 1,
+  "subCategoryId": 3
+}
+
+###
+
+### Create a new product - Nike T-Shirt
+POST {{BaseURL}}/api/products
+Content-Type: application/json
+
+{
+  "name": "Nike Dri-FIT T-Shirt",
+  "description": "Athletic performance t-shirt",
+  "price": 29.99,
+  "stock": 100,
+  "countryOfOrigin": "Vietnam",
+  "categoryId": 2,
+  "subCategoryId": 4
+}
+
+###
+
+### Create a new product - Levi's Jeans
+POST {{BaseURL}}/api/products
+Content-Type: application/json
+
+{
+  "name": "Levi's 501 Original Jeans",
+  "description": "Classic straight fit jeans",
+  "price": 79.99,
+  "stock": 75,
+  "countryOfOrigin": "Mexico",
+  "categoryId": 2,
+  "subCategoryId": 5
+}
+
+###
+
+### Update a product (includes CategoryId and SubCategoryId)
+PUT {{BaseURL}}/api/products/1
+Content-Type: application/json
+
+{
+  "name": "MacBook Pro 16\" M3 Max",
+  "description": "Apple MacBook Pro with M3 Max chip - Updated",
+  "price": 3499.99,
+  "stock": 10,
+  "countryOfOrigin": "USA",
+  "categoryId": 1,
+  "subCategoryId": 1
+}
+
+###
+
+### Update product - Change category and subcategory
+PUT {{BaseURL}}/api/products/1
+Content-Type: application/json
+
+{
+  "name": "MacBook Pro 16\"",
+  "description": "Apple MacBook Pro",
+  "price": 2499.99,
+  "stock": 15,
+  "countryOfOrigin": "USA",
+  "categoryId": 1,
+  "subCategoryId": 2
+}
+
+###
+
+### Delete a product
+DELETE {{BaseURL}}/api/products/1
+
+###
+
+###############################################################################
+# TEST SCENARIOS
+###############################################################################
+
+### Test Scenario 1: Create full cascade (Category -> SubCategory -> Product)
+# Step 1: Create Category
+POST {{BaseURL}}/api/categories
+Content-Type: application/json
+
+{
+  "name": "Home Appliances",
+  "description": "Kitchen and home appliances"
+}
+
+###
+
+# Step 2: Create SubCategory (use the categoryId from step 1)
+POST {{BaseURL}}/api/subcategories
+Content-Type: application/json
+
+{
+  "name": "Refrigerators",
+  "description": "Home refrigerators and freezers",
+  "categoryId": 4
+}
+
+###
+
+# Step 3: Create Product (use categoryId and subCategoryId from above)
+POST {{BaseURL}}/api/products
+Content-Type: application/json
+
+{
+  "name": "Samsung Family Hub Refrigerator",
+  "description": "Smart refrigerator with touchscreen",
+  "price": 3299.99,
+  "stock": 5,
+  "countryOfOrigin": "South Korea",
+  "categoryId": 4,
+  "subCategoryId": 6
+}
+
+###
+
+### Test Scenario 2: Test validation - Invalid Category
+POST {{BaseURL}}/api/products
+Content-Type: application/json
+
+{
+  "name": "Test Product",
+  "description": "This should fail",
+  "price": 99.99,
+  "stock": 10,
+  "categoryId": 999,
+  "subCategoryId": 1
+}
+
+###
+
+### Test Scenario 3: Test validation - SubCategory doesn't belong to Category
+POST {{BaseURL}}/api/products
+Content-Type: application/json
+
+{
+  "name": "Test Product",
+  "description": "This should fail - subcategory mismatch",
+  "price": 99.99,
+  "stock": 10,
+  "categoryId": 1,
+  "subCategoryId": 4
+}
+
+###
+
+### Test Scenario 4: Test validation - Negative price
+POST {{BaseURL}}/api/products
+Content-Type: application/json
+
+{
+  "name": "Test Product",
+  "description": "This should fail - negative price",
+  "price": -99.99,
+  "stock": 10,
+  "categoryId": 1,
+  "subCategoryId": 1
+}
+
+###
+
+### Test Scenario 5: Multi-select cascade workflow
+# Step 1: Get all categories
+GET {{BaseURL}}/api/categories
+
+###
+
+# Step 2: Get subcategories for multiple categories (e.g., Electronics and Clothing)
+GET {{BaseURL}}/api/subcategories/by-categories?categoryIds=1,2
+
+###
+
+# Step 3: Get products for multiple subcategories
+GET {{BaseURL}}/api/products/by-subcategories?subCategoryIds=1,2,4
+
+###

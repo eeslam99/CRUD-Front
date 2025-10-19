@@ -51,7 +51,6 @@ label {
   padding: 10px 12px;
   font-size: 14px;
   border: 1px solid #ced4da;
-  background-color: black !important;
   border-radius: 4px;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   box-sizing: border-box;

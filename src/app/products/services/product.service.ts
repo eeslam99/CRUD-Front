@@ -19,6 +19,25 @@ export class ProductService {
     return this.http.get<Product>(`${this.baseURL}/api/products/${id}`);
   }
 
+  getProductsByCategoryId(categoryId: number): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.baseURL}/api/products/by-category/${categoryId}`);
+  }
+
+  getProductsBySubCategoryId(subCategoryId: number): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.baseURL}/api/products/by-subcategory/${subCategoryId}`);
+  }
+
+  // Multi-select - GET method
+  getProductsByMultipleSubCategoryIds(subCategoryIds: number[]): Observable<Product[]> {
+    const idsParam = subCategoryIds.join(',');
+    return this.http.get<Product[]>(`${this.baseURL}/api/products/by-subcategories?subCategoryIds=${idsParam}`);
+  }
+
+  // Multi-select - POST method
+  getProductsByMultipleSubCategoryIdsPost(subCategoryIds: number[]): Observable<Product[]> {
+    return this.http.post<Product[]>(`${this.baseURL}/api/products/by-subcategories`, subCategoryIds);
+  }
+
   createProduct(product: Product): Observable<Product> {
     return this.http.post<Product>(`${this.baseURL}/api/products`, product);
   }
