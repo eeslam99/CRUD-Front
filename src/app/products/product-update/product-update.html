@@ -34,6 +34,74 @@
         </div>
       </div>
 
+      <!-- Category Single-Select Field -->
+      <div class="form-group">
+        <label for="category">Category <span class="required">*</span></label>
+        
+        <p-select
+          [options]="categories"
+          [(ngModel)]="selectedCategory"
+          [ngModelOptions]="{standalone: true}"
+          optionLabel="name"
+          placeholder="Select a category"
+          [filter]="true"
+          filterPlaceholder="Search categories"
+          (onChange)="onCategoryChange($event)"
+          [style]="{'width': '100%'}"
+          [showClear]="true"
+        >
+          <ng-template let-category pTemplate="item">
+            <div>
+              <div><strong>{{ category.name }}</strong></div>
+              <small style="color: #666;">{{ category.description }}</small>
+            </div>
+          </ng-template>
+        </p-select>
+        <div class="error-message" *ngIf="!selectedCategory">
+          <small style="color: #dc3545;">Please select a category</small>
+        </div>
+        <small *ngIf="categories && categories.length > 0" style="color: #666;">
+          {{ categories.length }} categories available
+        </small>
+      </div>
+
+      <!-- SubCategory Dropdown Field (Cascade) -->
+      <div class="form-group">
+        <label for="subCategoryId">SubCategory <span class="required">*</span></label>
+        
+        <p-select
+          [options]="filteredSubCategories"
+          [(ngModel)]="selectedSubCategory"
+          [ngModelOptions]="{standalone: true}"
+          optionLabel="name"
+          placeholder="Select subcategory"
+          [filter]="true"
+          [disabled]="!selectedCategory || filteredSubCategories.length === 0"
+          (onChange)="onSubCategoryChange($event)"
+          [style]="{'width': '100%'}"
+          [showClear]="true"
+        >
+          <ng-template let-subCategory pTemplate="item">
+            <div>
+              <div><strong>{{ subCategory.name }}</strong></div>
+              <small style="color: #666;">{{ subCategory.description }}</small>
+            </div>
+          </ng-template>
+        </p-select>
+        <small *ngIf="!selectedCategory" class="text-muted">
+          Please select a category first
+        </small>
+        <small *ngIf="selectedCategory && filteredSubCategories.length === 0" class="text-muted">
+          No subcategories available for selected category
+        </small>
+        <small *ngIf="filteredSubCategories.length > 0" style="color: #666;">
+          {{ filteredSubCategories.length }} subcategories available
+        </small>
+        <div class="error-message" *ngIf="!selectedSubCategory">
+          <small style="color: #dc3545;">SubCategory is required</small>
+        </div>
+      </div>
+
       <!-- Country of Origin Field -->
       <div class="form-group">
         <label for="countryOfOrigin">Country of Origin <span class="required">*</span></label>

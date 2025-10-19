@@ -9,7 +9,6 @@ import { ProductList } from './product-list/product-list';
 import { ProductDetails } from './product-details/product-details';
 import { ProductCreate } from './product-create/product-create';
 import { ProductUpdate } from './product-update/product-update';
-import { ProductDelete } from './product-delete/product-delete';
 
 // PrimeNG Modules
 import { TableModule } from 'primeng/table';
@@ -24,7 +23,10 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
-import { AutoCompleteModule } from 'primeng/autocomplete';
+import { AutoComplete } from 'primeng/autocomplete';
+import { MultiSelect } from 'primeng/multiselect';
+import { Select } from 'primeng/select';
+import { FormsModule } from '@angular/forms';
 
 // PrimeNG Services
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -34,12 +36,12 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     ProductList,
     ProductDetails,
     ProductCreate,
-    ProductUpdate,
-    ProductDelete
+    ProductUpdate
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     RouterModule,
     ProductsRoutingModule,
     TableModule,
@@ -54,7 +56,9 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     ToastModule,
     IconFieldModule,
     InputIconModule,
-    AutoCompleteModule
+    AutoComplete,
+    MultiSelect,
+    Select
   ],
   providers: [ConfirmationService, MessageService]
 })

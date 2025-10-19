@@ -14,15 +14,10 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin-left: 250px;
   transition: margin-left 0.3s ease;
   min-width: 0; /* Prevent flex overflow */
 }
 
-/* When sidebar is collapsed */
-.app-container:has(.sidebar.collapsed) .main-layout {
-  margin-left: 70px;
-}
 
 .main-content {
   flex: 1;

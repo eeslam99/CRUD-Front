@@ -29,6 +29,22 @@
       </div>
 
       <div class="detail-row">
+        <div class="detail-label">Category:</div>
+        <div class="detail-value">
+          <span *ngIf="product.category">{{ product.category.name }}</span>
+          <span *ngIf="!product.category" style="color: #999;">Not assigned</span>
+        </div>
+      </div>
+
+      <div class="detail-row">
+        <div class="detail-label">SubCategory:</div>
+        <div class="detail-value">
+          <span *ngIf="product.subCategory">{{ product.subCategory.name }}</span>
+          <span *ngIf="!product.subCategory" style="color: #999;">Not assigned</span>
+        </div>
+      </div>
+
+      <div class="detail-row">
         <div class="detail-label">Country of Origin:</div>
         <div class="detail-value product-name">{{ product.countryOfOrigin }}</div>
       </div>

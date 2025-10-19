@@ -38,7 +38,7 @@
       [rows]="10"
       [rowsPerPageOptions]="[5, 10, 20]"
       [tableStyle]="{ 'min-width': '60rem' }"
-      [globalFilterFields]="['name', 'description', 'price', 'stock']"
+      [globalFilterFields]="['name', 'description', 'price', 'stock', 'countryOfOrigin', 'category.name', 'subCategory.name']"
       styleClass="p-datatable-striped">
       
       <ng-template pTemplate="caption">
@@ -64,8 +64,10 @@
           <th pSortableColumn="name">
             Name <p-sortIcon field="name"></p-sortIcon>
           </th>
+          <th>Category</th>
+          <th>SubCategory</th>
           <th pSortableColumn="CountryOfOrigin">
-            CountryOfOrigin <p-sortIcon field="CountryOfOrigin"></p-sortIcon>
+            Country <p-sortIcon field="CountryOfOrigin"></p-sortIcon>
           </th>
           <th pSortableColumn="description">
             Description
@@ -90,11 +92,27 @@
             <strong>{{ product.name }}</strong>
           </td>
           <td>
+            <p-tag 
+              *ngIf="product.category" 
+              [value]="product.category.name" 
+              severity="info">
+            </p-tag>
+            <span *ngIf="!product.category">-</span>
+          </td>
+          <td>
+            <p-tag 
+              *ngIf="product.subCategory" 
+              [value]="product.subCategory.name" 
+              severity="secondary">
+            </p-tag>
+            <span *ngIf="!product.subCategory">-</span>
+          </td>
+          <td>
             <strong>{{ product.countryOfOrigin }}</strong>
           </td>
           <td>
             <span pTooltip="{{ product.description }}" tooltipPosition="top">
-              {{ product.description?.substring(0, 50) }}{{ product.description?.length > 50 ? '...' : '' }}
+              {{ product.description?.substring(0, 40) }}{{ product.description?.length > 40 ? '...' : '' }}
             </span>
           </td>
           <td>
@@ -146,7 +164,7 @@
 
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="7" class="text-center">
+          <td colspan="10" class="text-center">
             <div class="empty-message">
               <i class="pi pi-inbox" style="font-size: 3rem; color: #ccc;"></i>
               <p>No products found</p>
